@@ -134,6 +134,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
 .check-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; font-size: 14px; }
 .check-box { width: 20px; height: 20px; border: 2px solid var(--rule); border-radius: 5px; flex-shrink: 0; margin-top: 1px; }
 
+/* Day collapsible */
+.day-card { cursor: pointer; user-select: none; position: relative; }
+.day-card .day-title { padding-right: 28px; }
+.day-card .collapse-icon { position: absolute; right: 16px; top: 16px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; transition: transform 0.3s ease; }
+.day-card.collapsed .collapse-icon { transform: rotate(-90deg); }
+.day-content { max-height: 4000px; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease; opacity: 1; }
+.day-content.collapsed { max-height: 0; opacity: 0; margin: 0 !important; }
+.sec-header { cursor: pointer; }
+.sec-header .collapse-hint { font-size: 11px; color: var(--muted); margin-left: auto; font-weight: 400; }
+
 .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--rule); display: flex; padding: 6px 0 20px; z-index: 100; box-shadow: 0 -2px 16px rgba(0,0,0,0.06); }
 .tab-item { flex: 1; text-align: center; text-decoration: none; color: var(--muted); font-size: 10px; padding: 4px 0; transition: color 0.2s; }
 .tab-item:active { color: var(--accent); }
@@ -212,10 +222,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
 </div>
 
 <div class="section" style="margin-top:0;background:linear-gradient(135deg,#4B3FE3 0%,#7B6BFF 100%);color:#fff;padding:20px 0 16px;border-radius:0;">
-  <div style="padding:0 16px;"><div style="font-size:12px;opacity:0.85;">按紧急程度排序 · 点击勾选已完成项 · 自动保存进度</div></div>
+  <div style="padding:0 16px;"><div style="font-size:12px;opacity:0.85;">仅列出需提前抢票/预订的事项 · 点击勾选已完成项 · 自动保存进度</div></div>
   <div class="prog-wrap">
     <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
-    <div class="prog-text"><span id="progLabel">0 / 16 项完成</span><span id="progAmt">¥0 / ¥1715</span></div>
+    <div class="prog-text"><span id="progLabel">0 / 6 项完成</span><span id="progAmt">¥0 / ¥940</span></div>
   </div>
 </div>
 
@@ -285,118 +295,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <div><span class="task-name">8.20晚 太原→五台山 包车</span><span class="ttag ttag-w">提前1-2天预约</span></div>
       <div class="task-sub">团建后约19:00出发·2.5h直达台怀镇·滴滴站点巴士末班17:00赶不上团建后出发·⚠️提前在滴滴/高德预约包车(约¥300-400)，或请阳光国际酒店帮忙联系·五台山从半天→全天游览的关键</div>
       <div class="task-meta"><span class="m-item m-price">≈¥350</span><span class="m-item">📅 8.20用</span><span class="m-item m-chan">📱 滴滴/高德</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="sec-lbl">🟢 可以到了再买 · 班次多/无限流/现场（10项）</div>
-
-<div class="task-card p6" data-id="t3" data-price="78">
-  <div class="task-row" onclick="toggle('t3')">
-    <div class="cbox" id="cb-t3"></div>
-    <div class="task-body">
-      <div><span class="task-name">动车 D1121 应县西→太原南</span><span class="ttag ttag-g">16班可选</span></div>
-      <div class="task-sub">17:58发→19:43到 · 应县西→太原南每天16班，17点后3班(17:34/17:58/19:15) · D1121票源充足(99张) · 备选D1037(17:34发→18:57到,¥79)<br>✅比原D5377大同南→太原站早到1h42min + 省¥52 · 消除大同南回头路</div>
-      <div class="task-meta"><span class="m-item m-price">¥78</span><span class="m-item">📅 8.22用</span><span class="m-item m-chan">📱 12306</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="task-card p6" data-id="t10" data-price="35">
-  <div class="task-row" onclick="toggle('t10')">
-    <div class="cbox" id="cb-t10"></div>
-    <div class="task-body">
-      <div><span class="task-name">小西天门票</span><span class="ttag ttag-g">极少售罄</span></div>
-      <div class="task-sub">小景区 · 虽实名预约但基本不紧张 · 到了再约也来得及</div>
-      <div class="task-meta"><span class="m-item m-price">¥35</span><span class="m-item">📅 8.16用</span><span class="m-item m-chan">📱 公众号"隰县小西天景区"</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="task-card p6" data-id="t11" data-price="190">
-  <div class="task-row" onclick="toggle('t11')">
-    <div class="cbox" id="cb-t11"></div>
-    <div class="task-body">
-      <div><span class="task-name">八泉峡门票+套票</span><span class="ttag ttag-w">提前1天预约</span></div>
-      <div class="task-sub">通票¥140(多景区入园) + B线路¥50(单程游船+索道+电梯+往返观光车) · 比景区全套¥180省¥130<br>⚠️ ①门票：景区要求提前预约，去哪儿/现场购票<br>②交通：长治东→八泉峡打车往返约¥100(1h/程) · 8.17全天5h完整A线游览</div>
-      <div class="task-meta"><span class="m-item m-price">≈¥190</span><span class="m-item">📅 8.17用</span><span class="m-item m-chan">📱 去哪儿/现场</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="task-card p6" data-id="t6" data-price="20">
-  <div class="task-row" onclick="toggle('t6')">
-    <div class="cbox" id="cb-t6"></div>
-    <div class="task-body">
-      <div><span class="task-name">临汾城西→长治东 城际公交</span><span class="ttag ttag-w">提前1-3天</span></div>
-      <div class="task-sub">07:00发→09:30到 · 2.5h · ¥20(试运营补贴价) · 每35min一班 · 替代原太原中转两段高铁(省¥131)<br>⚠️ 公众号"临汾智行"购票·实名制·预售3日 · 如停运改顺风车(¥100-150,2h)</div>
-      <div class="task-meta"><span class="m-item m-price">¥20</span><span class="m-item">📅 8.17用</span><span class="m-item m-chan">📱 临汾智行公众号</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="task-card p6" data-id="t7" data-price="105">
-  <div class="task-row" onclick="toggle('t7')">
-    <div class="cbox" id="cb-t7"></div>
-    <div class="task-body">
-      <div><span class="task-name">动车 D3378 长治东→太原南</span><span class="ttag ttag-g">多班次</span></div>
-      <div class="task-sub">16:46发→18:13到 · 1h27min · 八泉峡5h游览后返太原报到 · 下午另有17:19 G3754等班次可选</div>
-      <div class="task-meta"><span class="m-item m-price">¥105</span><span class="m-item">📅 8.17用</span><span class="m-item m-chan">📱 12306</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="task-card p6 done" data-id="t9" data-price="45">
-  <div class="task-row" onclick="toggle('t9')">
-    <div class="cbox checked" id="cb-t9"></div>
-    <div class="task-body">
-      <div><span class="task-name">高铁 介休东→临汾西</span><span class="ttag ttag-g">已购</span></div>
-      <div class="task-sub">G1953 · 17:53发→18:42到 · 49min · ¥45 · 方案B（备选）：若无介休直达隰县班车则乘此车</div>
-      <div class="task-meta"><span class="m-item m-price">¥45</span><span class="m-item">📅 8.15用</span><span class="m-item m-chan">📱 12306</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="task-card p6" data-id="t14" data-price="100">
-  <div class="task-row" onclick="toggle('t14')">
-    <div class="cbox" id="cb-t14"></div>
-    <div class="task-body">
-      <div><span class="task-name">恒山→应县西站 打车</span><span class="ttag ttag-w">提前1天预约</span></div>
-      <div class="task-sub">浑源距应县西站约49km · 打车约1h · ✅比原大同南80km/¥180更近更省 · 应县西在太原方向,消除回头路<br>也可浑源客运站坐班车到应县(¥16,1.5h)再打车到应县西站 · 建议提前在滴滴/高德预约</div>
-      <div class="task-meta"><span class="m-item m-price">≈¥100</span><span class="m-item">📅 8.22用</span><span class="m-item m-chan">📱 滴滴/高德</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="task-card p6" data-id="t15" data-price="45">
-  <div class="task-row" onclick="toggle('t15')">
-    <div class="cbox" id="cb-t15"></div>
-    <div class="task-body">
-      <div><span class="task-name">恒山门票</span><span class="ttag ttag-g">现场购票</span></div>
-      <div class="task-sub">已取消预约制 · 恒山游客中心现场购票</div>
-      <div class="task-meta"><span class="m-item m-price">¥45</span><span class="m-item">📅 8.22用</span><span class="m-item m-chan">🚪 现场</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="task-card p6" data-id="t16" data-price="158">
-  <div class="task-row" onclick="toggle('t16')">
-    <div class="cbox" id="cb-t16"></div>
-    <div class="task-body">
-      <div><span class="task-name">小西天+壶口 一日游直通车</span><span class="ttag ttag-w">提前1天18:00前</span></div>
-      <div class="task-sub">去哪儿网「小西天+壶口瀑布一日游」· 含往返车费，高铁站接送<br>⏰ 7:50临汾西站上车→10:00-12:00小西天→15:00-17:00壶口→19:30返临汾<br>⚠️ 仅方案B（住临汾）需预订；若15号已住隰县走方案A则不订此车<br>💡 方案A改用山西文旅直通车分段购票（文旅行小程序）</div>
-      <div class="task-meta"><span class="m-item m-price">¥158</span><span class="m-item">📅 8.16用</span><span class="m-item m-chan">📱 去哪儿网</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="task-card p6" data-id="t17" data-price="65">
-  <div class="task-row" onclick="toggle('t17')">
-    <div class="cbox" id="cb-t17"></div>
-    <div class="task-body">
-      <div><span class="task-name">五台山→恒山 浑源班车</span><span class="ttag ttag-w">提前1天购</span></div>
-      <div class="task-sub">五台山8:00发→恒山¥65：浑源汽车站旅游班车（另有11:10/13:40班次），车站窗口/电话预订<br>⚠️ 8:00是最早也是唯一可用班次（大同景区直通车11:30线到达太晚无法登顶恒山）<br>⚠️ 暑期周末紧张，建议提前1天购票 · 恒山→应县西站打车另计(见上项)</div>
-      <div class="task-meta"><span class="m-item m-price">¥65</span><span class="m-item">📅 8.22用</span><span class="m-item m-chan">📍 五台山广化寺停车场</span></div>
     </div>
   </div>
 </div>
@@ -577,6 +475,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <span class="w-alert">带伞</span>
     </div>
   </div>
+  <div class="day-content">
   <div style="padding: 0 16px 16px;">
     <div class="timeline">
       <div class="tl-item"><div class="tl-time">09:15</div><div class="tl-text">福州长乐机场起飞</div><div class="tl-sub">FU6739 · 飞行2h45m</div></div>
@@ -593,7 +492,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <div class="tl-item"><div class="tl-time">16:15</div><div class="tl-text"><strong>后土庙（1h）</strong></div><span class="tl-transport">🚶 步行约1km · 凭身份证免费</span><div class="tl-sub">"三晋琉璃艺术博物馆" · 明代皇家黄琉璃顶、孔雀蓝鸱吻、千尊道教彩塑</div></div>
       <div class="tl-item"><div class="tl-time">17:30</div><div class="tl-text"><strong>袄神楼</strong>（外观打卡）</div><span class="tl-transport">🚶 后土庙旁步行可达</span><div class="tl-sub">国内唯一现存祆教（拜火教）建筑 · 三晋四大名楼之一 · 约20-30min</div></div>
       <div class="tl-item"><div class="tl-time">18:00</div><div class="tl-text">城隍庙（如开放）或老城街巷闲逛</div><div class="tl-sub">免费明代官式古建 · 三色琉璃脊饰 · 顺城关老街感受晋商遗风</div></div>
-      <div class="tl-item"><div class="tl-time">18:30</div><div class="tl-text">晚餐，逛老城街巷</div></div>
       <div class="tl-item"><div class="tl-time">晚上</div><div class="tl-text">完成三项预订</div><div class="tl-sub">✅ 绵山门票+壶口门票（已完成）<br>🔴 小西天+壶口直通车（去哪儿网）<br>📱 注册"北岳云游"小程序+人脸认证（明晚20:00抢悬空寺票）</div></div>
       <div class="tl-item"><div class="tl-time">21:00</div><div class="tl-text">回酒店洗衣服</div><div class="tl-sub">👕 禧悦酒店有洗衣房 · 明天绵山8h出汗多，今晚洗衣服明早干</div></div>
     </div>
@@ -601,7 +499,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div style="margin: 8px 16px 0; display: flex; gap: 8px;">
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">🍽️ 介休特色小吃</div>
-      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">碗托（荞麦凉粉拌辣酱蒜泥）<br>羊肉火烧 · 蘸片子（介休独有）<br>担担面 · 贯馅糖（非遗甜点）<br>油糕</div>
+      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">碗托 · 羊肉火烧 · 蘸片子<br>担担面 · 贯馅糖 · 油糕</div>
     </div>
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--success); margin-bottom: 4px;">🎫 门票</div>
@@ -611,6 +509,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div class="hotel-hl">
     <div class="hotel-icon">🏨</div>
     <div><div class="hotel-name">住宿：禧悦酒店（介休火车站店）</div><div class="hotel-desc">文明南街161号 · 2024年开业 · 4.6分 · 有洗衣房 · 距介休站810m、后土庙约1km · 经济实惠为明天8h全天游览养精蓄锐</div></div>
+  </div>
   </div>
 </div>
 
@@ -638,6 +537,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <span class="int-label">极高</span>
     </div>
   </div>
+  <div class="day-content">
   <div style="padding: 0 16px 16px;">
     <div class="timeline">
       <div class="tl-item"><div class="tl-time">07:00</div><div class="tl-text">起床、早餐、退房寄存行李</div></div>
@@ -661,12 +561,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div style="margin: 8px 16px 0; display: flex; gap: 8px;">
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">🍽️ 临汾特色小吃</div>
-      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">牛肉丸子面（招牌）<br>狗舌头炒面 · 饸饹面 · 绵山野菜</div>
+      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">牛肉丸子面 · 狗舌头炒面<br>饸饹面 · 绵山野菜</div>
     </div>
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--success); margin-bottom: 4px;">🎫 门票</div>
       <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;"><strong>绵山</strong> ¥160(门票110+观光车50)<br>当日有效 · 8:00-19:30<br>📱 公众号"绵山风景区"预约<br>⚠️ 山路温差5-8℃带薄外套</div>
     </div>
+  </div>
   </div>
 </div>
 
@@ -694,6 +595,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <span class="int-label">较高</span>
     </div>
   </div>
+  <div class="day-content">
   <div style="padding: 0 16px 16px;">
     <div class="timeline">
       <div class="tl-item"><div class="tl-time">07:00</div><div class="tl-text">起床、早餐</div><div class="tl-sub">📍 住隰县：酒店步行5分钟到小西天 · 📍 住临汾：7:50临汾西站乘直通车</div></div>
@@ -718,12 +620,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div style="margin: 8px 16px 0; display: flex; gap: 8px;">
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">🍽️ 临汾特色小吃</div>
-      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">牛肉丸子面（招牌）<br>洪洞甲鱼 · 泡泡油糕</div>
+      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">牛肉丸子面 · 洪洞甲鱼<br>泡泡油糕</div>
     </div>
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--success); margin-bottom: 4px;">🎫 门票</div>
       <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;"><strong>壶口瀑布</strong> ¥80 · 暑期需提前3-7天预约<br><strong>小西天</strong> ¥35 · 实名制基本不紧张<br>🅰️ 方案A：山西文旅直通车分段购票<br>🅱️ 方案B：去哪儿网一日游 ¥158(含往返)</div>
     </div>
+  </div>
   </div>
 </div>
 
@@ -751,6 +654,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <span class="int-label">较高</span>
     </div>
   </div>
+  <div class="day-content">
   <div style="padding: 0 16px 16px;">
     <div class="timeline">
       <div class="tl-item"><div class="tl-time">06:30</div><div class="tl-text">起床退房，赴临汾城西客运站</div><span class="tl-transport">🚕 打车约15min</span></div>
@@ -776,12 +680,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div style="margin: 8px 16px 0; display: flex; gap: 8px;">
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">🍽️ 长治特色小吃</div>
-      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">上党腊驴肉（长治三宝之首）<br>长子炒饼 · 刀削面 · 栲栳栳</div>
+      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">上党腊驴肉 · 长子炒饼<br>刀削面 · 栲栳栳</div>
     </div>
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--success); margin-bottom: 4px;">🎫 门票</div>
       <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;"><strong>八泉峡</strong> 通票¥140+B线¥50=¥190<br>A线全程4-5h · 7:30开园<br>📱 去哪儿/现场购票 · 打车往返¥100</div>
     </div>
+  </div>
   </div>
 </div>
 
@@ -804,6 +709,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <span class="w-text">太原：18日小雨31℃ · 19日晴30℃ · 20日晴转多云31℃</span>
     </div>
   </div>
+  <div class="day-content">
   <div style="padding: 0 16px 16px;">
     <div class="timeline">
       <div class="tl-item"><div class="tl-time">8.18 周二</div><div class="tl-text"><strong>全天开会</strong></div><div class="tl-sub">⚠️ 当天立即预约五台山8.21门票！每天限4万人</div></div>
@@ -817,7 +723,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div style="margin: 8px 16px 0; display: flex; gap: 8px;">
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">🍽️ 太原特色小吃</div>
-      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">过油肉（晋菜头牌）<br>刀削面 · 栲栳栳 · 六味斋酱肉</div>
+      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">过油肉 · 刀削面 · 栲栳栳<br>六味斋酱肉</div>
     </div>
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--success); margin-bottom: 4px;">🎫 团建门票</div>
@@ -827,6 +733,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div class="tip-box success" style="margin: 0 16px 16px;">
     <div class="tip-title">💡 会议期必做事项</div>
     <div class="tip-text">① 8.18当天预约五台山门票（公众号"五台山游客服务中心"）<br>② 8.19预约8.20晚包车赴五台山（滴滴/高德，约¥300-400，滴滴站点巴士末班17:00赶不上团建后出发）<br>③ 8.21购8.22五台山→恒山班车（浑源汽车站窗口/电话，¥65，8:00发，提前1天）+ 恒山→应县西站打车（滴滴/高德预约，≈¥100）<br>④ 确认悬空寺登临票是否已抢到<br>⑤ 大件行李寄存阳光国际酒店，8.22晚回太原取<br>⑥ 备用：若浑源班车满员，可改购大同景区直通车五台山→恒山(11:30,¥69)，但需放弃恒山登顶仅游悬空寺</div>
+  </div>
   </div>
 </div>
 
@@ -854,6 +761,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <span class="int-label">较高</span>
     </div>
   </div>
+  <div class="day-content">
   <div style="padding: 0 16px 16px;">
     <div class="timeline">
       <div class="tl-item"><div class="tl-time">06:30</div><div class="tl-text">起床，民宿简餐</div><div class="tl-sub">✅ 昨晚已到台怀镇，今日全天深度游览五台山！</div></div>
@@ -868,7 +776,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div style="margin: 8px 16px 0; display: flex; gap: 8px;">
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">🍽️ 五台山特色小吃</div>
-      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">罗汉斋（素斋）<br>台蘑酱 · 石头饼 · 金莲花茶</div>
+      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">罗汉斋 · 台蘑酱 · 石头饼<br>金莲花茶</div>
     </div>
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--success); margin-bottom: 4px;">🎫 门票</div>
@@ -878,6 +786,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div class="tip-box warn" style="margin: 0 16px 16px;">
     <div class="tip-title">⚠️ 天气提醒</div>
     <div class="tip-text">五台山8月21日雨转多云，气温仅11-19℃。<strong>必须带薄羽绒或厚外套</strong>，山区风雨体感更冷。雨中寺庙别有禅意，但注意防滑。</div>
+  </div>
   </div>
 </div>
 
@@ -905,6 +814,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <span class="int-label">较高</span>
     </div>
   </div>
+  <div class="day-content">
   <div style="padding: 0 16px 16px;">
     <div class="timeline">
       <div class="tl-item" data-ticket="t17"><div class="tl-time">08:00</div><div class="tl-text">五台山 → 恒山游客中心</div><span class="tl-transport">🚌 浑源汽车站旅游班车约3h · ¥65</span><div class="tl-sub">广化寺地面停车场乘车 · 车站窗口/电话提前1天购票</div></div>
@@ -922,7 +832,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div style="margin: 8px 16px 0; display: flex; gap: 8px;">
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">🍽️ 浑源特色小吃</div>
-      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">浑源凉粉（必吃）<br>黄芪羊汤 · 应县凉粉</div>
+      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">浑源凉粉 · 黄芪羊汤<br>应县凉粉</div>
     </div>
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--success); margin-bottom: 4px;">🎫 门票</div>
@@ -932,6 +842,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div class="tip-box danger" style="margin: 0 16px 16px;">
     <div class="tip-title">⚠️ 悬空寺登临票是全程最紧张的预约</div>
     <div class="tip-text">每天仅2475张（线上1200张），必须在8月15日（提前7天）通过"北岳云游"小程序抢8月22日的票。每个账号每周限购1次。如果没抢到，只能到恒山游客中心排当日线下票（上午638张，先到先得）。</div>
+  </div>
   </div>
 </div>
 
@@ -957,6 +868,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
       <span class="int-label">轻松</span>
     </div>
   </div>
+  <div class="day-content">
   <div style="padding: 0 16px 16px;">
     <div class="timeline">
       <div class="tl-item"><div class="tl-time">08:00</div><div class="tl-text"><strong>起床退房</strong></div><div class="tl-sub">✅ 昨晚已到太原，今天不用赶早！</div></div>
@@ -969,12 +881,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino 
   <div style="margin: 8px 16px 0; display: flex; gap: 8px;">
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">🍽️ 太原特色小吃</div>
-      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">头脑（药膳羊肉汤，配烧饼）<br>刀削面 · 莜面栲栳栳<br>百花稍梅 · 过油肉</div>
+      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">头脑 · 刀削面 · 莜面栲栳栳<br>百花稍梅 · 过油肉</div>
     </div>
     <div style="flex: 1; background: var(--bg2); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid var(--rule);">
       <div style="font-size: 11px; font-weight: 700; color: var(--success); margin-bottom: 4px;">🎫 返程</div>
       <div style="font-size: 11.5px; color: var(--muted); line-height: 1.6;">✈️ MU6437 太原11:30→福州14:00<br>08:30打车赴武宿机场T2<br>无景点门票 · 轻松返程</div>
     </div>
+  </div>
   </div>
 </div>
 <!-- Bottom nav -->
@@ -997,6 +910,43 @@ function updateProgress(){var tasks=document.querySelectorAll('.task-card');var 
 function saveState(){var s={};document.querySelectorAll('.task-card').forEach(function(t){s[t.dataset.id]=t.classList.contains('done');});try{localStorage.setItem('shanxi_purchase_state',JSON.stringify(s));}catch(e){}}
 function loadState(){try{var s=JSON.parse(localStorage.getItem('shanxi_purchase_state')||'{}');Object.keys(s).forEach(function(id){if(s[id]){var cb=document.getElementById('cb-'+id);if(cb){cb.classList.add('checked');var task=document.querySelector('[data-id="'+id+'"]');if(task){task.classList.add('done');}document.querySelectorAll('[data-ticket="'+id+'"]').forEach(function(el){el.classList.add('bought');});}}});}catch(e){}updateProgress();}
 loadState();
+
+/* Day collapse/expand */
+(function(){
+  function getDayKey(header){ return 'day_'+header.id; }
+  function applyState(header){
+    var content = header.nextElementSibling.querySelector('.day-content');
+    var card = header.nextElementSibling.querySelector('.day-card');
+    if(!content || !card) return;
+    var key = getDayKey(header);
+    var collapsed = false;
+    try { collapsed = localStorage.getItem(key) === '1'; } catch(e){}
+    if(collapsed){ card.classList.add('collapsed'); content.classList.add('collapsed'); }
+  }
+  function toggleDay(header){
+    var content = header.nextElementSibling.querySelector('.day-content');
+    var card = header.nextElementSibling.querySelector('.day-card');
+    if(!content || !card) return;
+    var isCollapsed = card.classList.toggle('collapsed');
+    content.classList.toggle('collapsed', isCollapsed);
+    try { localStorage.setItem(getDayKey(header), isCollapsed ? '1' : '0'); } catch(e){}
+  }
+  // 为每天的 day-card 和 sec-header 绑定点击
+  document.querySelectorAll('.sec-header').forEach(function(header){
+    if(!header.id || header.id.indexOf('day') !== 0) return;
+    applyState(header);
+    header.addEventListener('click', function(){ toggleDay(header); });
+    var card = header.nextElementSibling ? header.nextElementSibling.querySelector('.day-card') : null;
+    if(card){
+      card.addEventListener('click', function(e){ e.stopPropagation(); toggleDay(header); });
+      // 插入折叠图标
+      var icon = document.createElement('span');
+      icon.className = 'collapse-icon';
+      icon.textContent = '▼';
+      card.appendChild(icon);
+    }
+  });
+})();
 </script>
 </body>
 </html>
